@@ -5,13 +5,13 @@ class AuthManager {
 
     init() {
         // Check if user is already logged in
-        if (this.isLoggedIn() && window.location.pathname !== '/dashboard.html') {
+        if (this.isLoggedIn() && window.location.pathname !== 'dashboard.html') {
             window.location.href = 'dashboard.html';
             return;
         }
 
         // Check if user is not logged in and trying to access dashboard
-        if (!this.isLoggedIn() && window.location.pathname === '/dashboard.html') {
+        if (!this.isLoggedIn() && window.location.pathname === 'dashboard.html') {
             window.location.href = 'index.html';
             return;
         }

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Visitor Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dashboard-page">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <div class="logo-icon">VMS</div>
+                <span>Visitor Management</span>
+            </div>
+            <div class="nav-actions">
+                <span class="admin-name">Welcome, Admin</span>
+                <button id="logoutBtn" class="logout-btn">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="dashboard-container">
+            <div class="dashboard-header">
+                <h1>Visitor Dashboard</h1>
+                <button id="addVisitorBtn" class="add-btn">
+                    <span>+</span>
+                    Add New Visitor
+                </button>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon total">📊</div>
+                    <div class="stat-content">
+                        <h3 id="totalVisitors">0</h3>
+                        <p>Total Visitors</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon active">✅</div>
+                    <div class="stat-content">
+                        <h3 id="activeVisitors">0</h3>
+                        <p>Active Visitors</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon today">📅</div>
+                    <div class="stat-content">
+                        <h3 id="todayVisitors">0</h3>
+                        <p>Today's Visitors</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="search-section">
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Search visitors by name, phone, or purpose...">
+                    <button id="searchBtn">🔍</button>
+                </div>
+                <div class="filter-options">
+                    <select id="statusFilter">
+                        <option value="">All Status</option>
+                        <option value="checked-in">Checked In</option>
+                        <option value="checked-out">Checked Out</option>
+                    </select>
+                    <button id="clearFilters">Clear Filters</button>
+                </div>
+            </div>
+
+            <div class="visitors-section">
+                <div class="section-header">
+                    <h2>All Visitors</h2>
+                    <div class="view-options">
+                        <button id="cardView" class="view-btn active">Card View</button>
+                        <button id="tableView" class="view-btn">Table View</button>
+                    </div>
+                </div>
+                
+                <div id="visitorsContainer" class="visitors-grid">
+                    <!-- Visitors will be dynamically loaded here -->
+                </div>
+                
+                <div id="noVisitors" class="no-data" style="display: none;">
+                    <div class="no-data-icon">👥</div>
+                    <h3>No Visitors Found</h3>
+                    <p>Start by adding your first visitor to the system.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add/Edit Visitor Modal -->
+    <div id="visitorModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add New Visitor</h2>
+                <span class="close-btn" id="closeModal">&times;</span>
+            </div>
+            
+            <form id="visitorForm" class="visitor-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="visitorName">Full Name *</label>
+                        <input type="text" id="visitorName" name="visitorName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="visitorPhone">Phone Number *</label>
+                        <input type="tel" id="visitorPhone" name="visitorPhone" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="visitorEmail">Email Address</label>
+                        <input type="email" id="visitorEmail" name="visitorEmail">
+                    </div>
+                    <div class="form-group">
+                        <label for="visitorCompany">Company/Organization</label>
+                        <input type="text" id="visitorCompany" name="visitorCompany">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="visitorPurpose">Purpose of Visit *</label>
+                        <select id="visitorPurpose" name="visitorPurpose" required>
+                            <option value="">Select Purpose</option>
+                            <option value="business">Business Meeting</option>
+                            <option value="interview">Interview</option>
+                            <option value="delivery">Delivery</option>
+                            <option value="maintenance">Maintenance</option>
+                            <option value="personal">Personal Visit</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="visitorHost">Host/Contact Person</label>
+                        <input type="text" id="visitorHost" name="visitorHost">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="checkInTime">Check-in Time</label>
+                        <input type="datetime-local" id="checkInTime" name="checkInTime">
+                    </div>
+                    <div class="form-group">
+                        <label for="visitorStatus">Status</label>
+                        <select id="visitorStatus" name="visitorStatus">
+                            <option value="checked-in">Checked In</option>
+                            <option value="checked-out">Checked Out</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="visitorNotes">Additional Notes</label>
+                    <textarea id="visitorNotes" name="visitorNotes" rows="3" placeholder="Any additional information about the visitor..."></textarea>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" id="cancelBtn" class="cancel-btn">Cancel</button>
+                    <button type="submit" id="saveBtn" class="save-btn">Save Visitor</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content delete-modal">
+            <div class="modal-header">
+                <h2>Confirm Delete</h2>
+                <span class="close-btn" id="closeDeleteModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="delete-icon">🗑️</div>
+                <p>Are you sure you want to delete this visitor record?</p>
+                <p><strong id="deleteVisitorName"></strong></p>
+                <p class="warning">This action cannot be undone.</p>
+            </div>
+            <div class="form-actions">
+                <button type="button" id="cancelDelete" class="cancel-btn">Cancel</button>
+                <button type="button" id="confirmDelete" class="delete-btn">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+    <script src="visitors.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>
